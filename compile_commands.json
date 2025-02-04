@@ -1,0 +1,59 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-std=c11",
+      "-ggdb",
+      "-DDEBUG",
+      "-I/usr/include",
+      "-I.",
+      "-I./src",
+      "-c",
+      "-o",
+      "src/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/tasos/projects/os_scheduler",
+    "file": "/home/tasos/projects/os_scheduler/src/main.c",
+    "output": "/home/tasos/projects/os_scheduler/src/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-std=c11",
+      "-ggdb",
+      "-DDEBUG",
+      "-I/usr/include",
+      "-I.",
+      "-I./src",
+      "-c",
+      "-o",
+      "src/lib/pcbVec.o",
+      "src/lib/pcbVec.c"
+    ],
+    "directory": "/home/tasos/projects/os_scheduler",
+    "file": "/home/tasos/projects/os_scheduler/src/lib/pcbVec.c",
+    "output": "/home/tasos/projects/os_scheduler/src/lib/pcbVec.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-std=c11",
+      "-ggdb",
+      "-DDEBUG",
+      "-I/usr/include",
+      "-I.",
+      "-I./src",
+      "-c",
+      "-o",
+      "src/lib/processJSONParser.o",
+      "src/lib/processJSONParser.c"
+    ],
+    "directory": "/home/tasos/projects/os_scheduler",
+    "file": "/home/tasos/projects/os_scheduler/src/lib/processJSONParser.c",
+    "output": "/home/tasos/projects/os_scheduler/src/lib/processJSONParser.o"
+  }
+]
