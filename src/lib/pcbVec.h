@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define PCB_VEC_SIZE 9
+#define PCB_VEC_SIZE 16
 
 typedef struct {
 	uint32_t pid;
@@ -14,9 +14,9 @@ typedef struct {
 	uint32_t priority;
 } PCB;
 
-typedef struct PCB_vec PCB_vec;
+typedef struct PCB_vec PCB_vec; // Qpaque type for better encapulation
 
-int pcbVec_new(PCB_vec **vec);
+PCB_vec *pcbVec_new();
 void pcbVec_destroy(PCB_vec *vec);
 
 size_t pcbVec_length(PCB_vec *vec);

@@ -11,13 +11,16 @@ struct PCB_vec {
 	PCB *processes;
 };
 
-int pcbVec_new(PCB_vec **vec)
+PCB_vec *pcbVec_new()
 {
-	*vec = (PCB_vec *)malloc(sizeof(PCB_vec *) + PCB_VEC_SIZE * sizeof(PCB));
-	(*vec)->size = 0;
-	(*vec)->capacity = PCB_VEC_SIZE;
-	(*vec)->processes = (PCB *)((*vec) + 1);
-	return 0;
+	PCB_vec *vec = malloc(sizeof(PCB_vec));
+	assert(vec != NULL && "Failed to allocate vec");
+	*vec = (PCB_vec){
+		.processes = malloc(sizeof(PCB) * PCB_VEC_SIZE),
+		.capacity = PCB_VEC_SIZE
+	};
+	assert(vec->processes != NULL && "Failed to allocate vec elements");
+	return vec;
 }
 
 void pcbVec_destroy(PCB_vec *vec)
@@ -32,13 +35,18 @@ size_t pcbVec_length(PCB_vec *vec)
 
 int pcbVec_append(PCB_vec *vec, PCB pcb)
 {
-	if(vec == NULL) {
-		return -1;
-	}
-	if(vec->size >= vec->capacity) {
+	assert(vec != NULL && "Trying to append to uninitialized vec");
+	if(vec->size == vec->capacity) {
 		if(vec->capacity < 100) vec->capacity *= 2;
 		else vec->capacity += 50;
-		vec->processes = realloc(vec->processes, (vec->capacity) * sizeof(PCB));
+
+		PCB *newProcesses = malloc(vec->capacity * sizeof(PCB));
+		for(int i = 0; i < vec->size; i++) {
+			newProcesses[i] = vec->processes[i];
+		}
+		free(vec->processes);
+		vec->processes = newProcesses;
+		/*vec->processes = realloc(vec->processes, (vec->capacity) * sizeof(PCB));*/
 	}
 	vec->processes[vec->size] = pcb;
 	++vec->size;

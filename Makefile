@@ -8,7 +8,7 @@ DEBUG ?= 1
 CFLAGS = -Wall -std=c11
 
 ifeq ($(DEBUG), 1)
-CFLAGS += -ggdb -DDEBUG
+CFLAGS += -ggdb -DDEBUG -O2
 $(info INFO: DEBUG MODE ON)
 else
 $(info INFO: DEBUG MODE OFF)
