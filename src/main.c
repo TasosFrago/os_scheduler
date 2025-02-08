@@ -11,6 +11,8 @@
 
 void printProcess(PCB_vec *vec);
 
+void fcfs(QueueInt_h job_q, QueueInt_h ready_q, QueueInt_h waiting_q, PCB_vec processes);
+
 
 int main()
 {
@@ -36,6 +38,18 @@ int main()
 	q_destroy(&Q);
 
 	read_JSON_ProcessF("processes/01_processes.json", &processes);
+
+	QueueInt_h job_q, ready_q, waiting_q;
+	int running;
+	q_new(&job_q);
+	q_new(&ready_q);
+	q_new(&waiting_q);
+
+	for(int i = 0; i < 30; i++) {
+
+		fcfs(job_q, waiting_q, ready_q pro)
+	}
+
 
 	printf("Parsed %lu processes:\n", pcbVec_length(processes));
 	printProcess(processes);

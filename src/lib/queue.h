@@ -27,6 +27,7 @@ typedef struct {
 
 void q_new(QueueInt_h *q);
 void q_destroy(QueueInt_h *q);
+
 void q_push(QueueInt_h *q, int val);
 PopResult q_pop(QueueInt_h *q);
 
