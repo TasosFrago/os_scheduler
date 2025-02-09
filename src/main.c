@@ -85,9 +85,10 @@ int main(int argc, char *argv[])
 		}, i);
 	}
 
-	QueueInt_h ready_q, done_q;
+	QueueInt_h ready_q, done_q, gantt_q;
 	q_new(&ready_q);
 	q_new(&done_q);
+	q_new(&gantt_q);
 
 	int running_pid = 0, prev_running = 0;
 	int current_quantum = 0;
@@ -118,6 +119,8 @@ int main(int argc, char *argv[])
 				rr(&ready_q, &running_pid, processes, &current_quantum, quantum);
 				break;
 		}
+
+		q_push(&gantt_q, running_pid);
 
 		if(running_pid != 0) {
 			PCB *running_proc = pcbVec_get(processes, running_pid-1);
@@ -164,7 +167,7 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	printf("\nFinished:");
+	printf("\nFinished:\n");
 	printf("\tFinal Done Queue: [ ");
 	foreach_nodeR(done_q, elem) {
 		printf("%d", elem->data);
@@ -172,10 +175,22 @@ int main(int argc, char *argv[])
 			printf(", ");
 		}
 	}
-	printf(" ]\n\n");
+	printf(" ]\n");
+
+	printf("\tGant Graph:\n");
+	printf("\t\tTime: | ");
+	for(int i = 0; i < calculateMaxTime(processes); i++) {
+		printf("%-2d | ", i);
+	}
+	printf("\n\t\tPP:   | ");
+	foreach_nodeR(gantt_q, elem) {
+		printf("P%-2d| ", elem->data);
+	}
+	printf(" |\n\n");
 
 	q_destroy(&ready_q);
 	q_destroy(&done_q);
+	q_destroy(&gantt_q);
 
 	metrArr_calculateMetrics(metrics);
 
