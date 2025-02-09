@@ -43,8 +43,8 @@ int main()
 
 		/*srtf(&ready_q, &running_pid, processes);*/
 		/*rr(&ready_q, &running_pid, processes, &current_quantum);*/
-		fcfs(&ready_q, &running_pid, processes);
-		/*priority_preemptive(&ready_q, &running_pid, processes);*/
+		/*fcfs(&ready_q, &running_pid, processes);*/
+		priority_preemptive(&ready_q, &running_pid, processes);
 
 		if(running_pid != 0) {
 			PCB *running_proc = pcbVec_get(processes, running_pid-1);
