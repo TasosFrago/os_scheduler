@@ -58,6 +58,29 @@ PopResult q_pop(QueueInt_h *q)
 	};
 }
 
+void q_remove(QueueInt_h *q, struct Node *elem)
+{
+	assert(q != NULL || *q != NULL);
+	if(elem->prev == NULL && elem->next == NULL) { // elem is in both rear and front
+		(*q)->front = (*q)->rear = NULL;
+	} else if(elem->prev == NULL) { // elem is in the Rear
+		(*q)->rear = elem->next;
+		elem->next->prev = NULL;
+	} else if(elem->next == NULL) { // elem is in the front
+		(*q)->front = elem->prev;
+		elem->prev->next = NULL;
+	} else { // elem is in the middle of the queue
+		elem->prev->next = elem->next;
+		elem->next->prev = elem->prev;
+	}
+	free(elem);
+}
+
+int q_isEmpty(QueueInt_h *q)
+{
+	return ((*q)->rear == NULL && (*q)->front == NULL);
+}
+
 void q_destroy(QueueInt_h *q)
 {
 	while((*q)->rear != NULL) {

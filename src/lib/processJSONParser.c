@@ -82,7 +82,6 @@ int read_JSON_ProcessF(const char *filename, PCB_vec **processes)
 	size_t chunk_size;
 
 	if((chunk_size = read_chunk(f, chunk, JSON_CHUNK_SIZE)) > 0) {
-		printf("chunk size: %lu\n", chunk_size);
 		num_proc = parse_json_chunk(chunk, chunk_size, *processes, &p, tokens);
 	} else {
 		return -2;

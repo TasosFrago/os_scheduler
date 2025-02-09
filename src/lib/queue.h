@@ -30,5 +30,10 @@ void q_destroy(QueueInt_h *q);
 
 void q_push(QueueInt_h *q, int val);
 PopResult q_pop(QueueInt_h *q);
+void q_remove(QueueInt_h *q, struct Node *elem);
+int q_isEmpty(QueueInt_h *q);
+
+#define foreach_node(Q, node) \
+	for(struct Node *(node) = (Q)->rear; (node) != NULL; (node) = (node)->next)
 
 #endif // QUEUE_H

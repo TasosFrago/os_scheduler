@@ -25,6 +25,7 @@ PCB_vec *pcbVec_new()
 
 void pcbVec_destroy(PCB_vec *vec)
 {
+	free(vec->processes);
 	free(vec);
 }
 
@@ -53,8 +54,8 @@ int pcbVec_append(PCB_vec *vec, PCB pcb)
 	return 0;
 }
 
-PCB pcbVec_get(PCB_vec *vec, int index)
+PCB *pcbVec_get(PCB_vec *vec, int index)
 {
 	assert(index < vec->size && "Index out of bounds");
-	return vec->processes[index];
+	return &vec->processes[index];
 }
