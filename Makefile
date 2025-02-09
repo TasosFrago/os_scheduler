@@ -31,10 +31,14 @@ CFLAGS += $(INCLUDES) $(LD_FLAGS)
 
 TARGET = main
 
+ARGS ?=
+
 
 ##---------------
 ## BUILD RULES
 ##---------------
+
+.PHONY: all clean run
 
 all: $(TARGET)
 
@@ -43,6 +47,9 @@ $(TARGET): $(C_OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $^ -o $@
+
+run: $(TARGET)
+	./$(TARGET) $(ARGS)
 
 clean:
 	rm $(TARGET)

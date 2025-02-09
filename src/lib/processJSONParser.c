@@ -69,7 +69,7 @@ int read_JSON_ProcessF(const char *filename, PCB_vec **processes)
 {
 	FILE *f = fopen(filename, "r");
 	if(!f) {
-		perror("Error opening file");
+		printf("Error opening file\n");
 		return -1;
 	}
 

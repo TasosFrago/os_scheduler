@@ -7,11 +7,11 @@
 #define PCB_VEC_SIZE 16
 
 typedef struct {
-	uint32_t pid; //p1 p2 p3
-	uint32_t arrival; // xronos afijis
-	uint32_t burst; // xronos ekteleshs
-	uint32_t remaining; // poso xrono gia na teleivsei 
-	uint32_t priority; //protereotita
+	uint32_t pid;		// process ID
+	uint32_t arrival;	// arrival time
+	uint32_t burst;		// time that process will run
+	uint32_t remaining;	// remaining time to finish
+	uint32_t priority;	// priority of the process
 } PCB;
 
 typedef struct PCB_vec PCB_vec; // Qpaque type for better encapulation

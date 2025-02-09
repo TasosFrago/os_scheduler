@@ -56,6 +56,6 @@ int pcbVec_append(PCB_vec *vec, PCB pcb)
 
 PCB *pcbVec_get(PCB_vec *vec, int index)
 {
-	assert(index < vec->size && "Index out of bounds");
+	assert(index <= vec->size && "Index out of bounds");
 	return &vec->processes[index];
 }
