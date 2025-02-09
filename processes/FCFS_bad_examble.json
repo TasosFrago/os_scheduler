@@ -1,0 +1,38 @@
+[
+	{
+		"pid": 1,
+		"arrival": 0,
+		"burst": 50,
+		"remaining": 50,
+		"priority": 3
+	},
+	{
+		"pid": 2,
+		"arrival": 1,
+		"burst": 1,
+		"remaining": 1,
+		"priority": 5
+	},
+	{
+		"pid": 3,
+		"arrival": 2,
+		"burst": 2,
+		"remaining": 2,
+		"priority": 1
+	},
+	{
+		"pid": 4,
+		"arrival": 3,
+		"burst": 3,
+		"remaining": 3,
+		"priority": 4
+	},
+	{
+		"pid": 5,
+		"arrival": 4,
+		"burst": 4,
+		"remaining": 4,
+		"priority": 5
+	}
+]
+

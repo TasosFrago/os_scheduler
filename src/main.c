@@ -23,6 +23,16 @@ int main()
 	PCB_vec *processes = pcbVec_new();
 
 	read_JSON_ProcessF("processes/01_processes.json", &processes);
+	/*read_JSON_ProcessF("processes/FCFS_bad_examble.json", &processes);*/
+	/*read_JSON_ProcessF("processes/FCFS_good_examble.json", &processes);*/
+	/*read_JSON_ProcessF("processes/Priority_Preemptive_bad_ex.json", &processes);*/
+	/*read_JSON_ProcessF("processes/Priority_Preemptive_good_exam.json", &processes);*/
+	/*read_JSON_ProcessF("processes/RoundRobin_bad_ex.json", &processes);*/
+	/*read_JSON_ProcessF("processes/RoundRobin_good_ex.json", &processes);*/
+	/*read_JSON_ProcessF("processes/STRF_bad_ex.json", &processes);*/
+	/*read_JSON_ProcessF("processes/STRF_good_ex.json", &processes);*/
+	
+	
 
 	QueueInt_h ready_q, done_q;
 	q_new(&ready_q);
