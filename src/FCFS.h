@@ -1,8 +1,28 @@
 #include <stdio.h>
 //------------------ 
+
 #include "lib/queue.h"
 #include "lib/pcbVec.h"
 
+void fcfs(QueueInt_h *ready_q, int *running_pid, PCB_vec *processes) 
+{
+    if (q_isEmpty(ready_q)) return;  
+
+    if (*running_pid == 0) {  
+        PopResult result = q_pop(ready_q);  
+        if (result.type == VALUE) {  
+            *running_pid = result.val;  
+        }
+    }
+}
+
+
+
+
+
+
+
+/*
 
 
 void fcfs(QueueInt_h job_q, QueueInt_h ready_q, QueueInt_h waiting_q, PCB_vec **processes) {
@@ -13,7 +33,7 @@ void fcfs(QueueInt_h job_q, QueueInt_h ready_q, QueueInt_h waiting_q, PCB_vec **
     int priority[4];
     int temp;
 
-    // Γέμισμα των πινάκων με τα δεδομένα των διαδικασιών
+    
     for (int i = 0; i < 4; i++) {
         timeArrival_pop[i] = pcbVec_get(processes, i).arrival;
         pid_sorted[i] = pcbVec_get(processes, i).pid;
@@ -50,7 +70,7 @@ void fcfs(QueueInt_h job_q, QueueInt_h ready_q, QueueInt_h waiting_q, PCB_vec **
         }
     }
 
-    // Εκτύπωση και προσθήκη των διεργασιών στην ουρά με βάση τον χρόνο burst
+   
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < burst[i]; j++) {
             q_push(&job_q, pid_sorted[i]);
@@ -62,22 +82,4 @@ void fcfs(QueueInt_h job_q, QueueInt_h ready_q, QueueInt_h waiting_q, PCB_vec **
    
 }
 
-
-
-
-int main()
-{
-   PCB_vec *processes = pcbVec_new();
-   read_JSON_ProcessF("processes/01_processes.json", &processes);
-
-	QueueInt_h job_q, ready_q, waiting_q;
-	int running;
-	q_new(&job_q);
-	q_new(&ready_q);
-	q_new(&waiting_q);
-
-   fcfs(job_q, waiting_q, ready_q , &processes ) ;
-
-   return 0;
-
-}
+*/

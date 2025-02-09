@@ -11,7 +11,8 @@
 
 #include "SRTF.h"
 #include "RoundRobin.h"
-
+#include "FCFS.h"
+#include "Priority_Preemptive.h"
 
 void printProcess(PCB_vec *vec);
 
@@ -41,8 +42,9 @@ int main()
 		}
 
 		/*srtf(&ready_q, &running_pid, processes);*/
-		rr(&ready_q, &running_pid, processes, &current_quantum);
-		/*fcfs(job_q, waiting_q, ready_q pro)*/
+		/*rr(&ready_q, &running_pid, processes, &current_quantum);*/
+		fcfs(&ready_q, &running_pid, processes);
+		/*priority_preemptive(&ready_q, &running_pid, processes);*/
 
 		if(running_pid != 0) {
 			PCB *running_proc = pcbVec_get(processes, running_pid-1);
