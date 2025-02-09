@@ -1,0 +1,27 @@
+[
+    {
+      "pid": 1,
+      "arrival": 0,
+      "burst": 10,
+      "remaining": 10
+    },
+    {
+      "pid": 2,
+      "arrival": 1,
+      "burst": 1,
+      "remaining": 1
+    },
+    {
+      "pid": 3,
+      "arrival": 2,
+      "burst": 4,
+      "remaining": 4
+    },
+    {
+      "pid": 4,
+      "arrival": 3,
+      "burst": 6,
+      "remaining": 6
+    }
+  ]
+  
