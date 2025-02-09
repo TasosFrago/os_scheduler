@@ -21,6 +21,6 @@ void pcbVec_destroy(PCB_vec *vec);
 
 size_t pcbVec_length(PCB_vec *vec);
 int pcbVec_append(PCB_vec *vec, PCB pcb);
-PCB pcbVec_get(PCB_vec *vec, int index);
+PCB *pcbVec_get(PCB_vec *vec, int index);
 
 #endif // PCBVEC_H
