@@ -36,4 +36,7 @@ int q_isEmpty(QueueInt_h *q);
 #define foreach_node(Q, node) \
 	for(struct Node *(node) = (Q)->rear; (node) != NULL; (node) = (node)->next)
 
+#define foreach_nodeR(Q, node) \
+	for(struct Node *(node) = (Q)->front; (node) != NULL; (node) = (node)->prev)
+
 #endif // QUEUE_H

@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "lib/pcbVec.h"
 #include "lib/queue.h"
@@ -22,12 +23,14 @@ typedef enum {
 } algrithm_t;
 
 void printProcess(PCB_vec *vec);
+int calculateMaxTime(PCB_vec *vec);
 
 
 int main(int argc, char *argv[])
 {
 	if(argc < 3) {
 		printf("Not enough arguments given\n");
+		printf("./main [path/to/file-with-processes.json] [algorithm-to-run] [optional:spefify-quantum-for-round-robin]\n");
 		return -1;
 	}
 
@@ -36,17 +39,33 @@ int main(int argc, char *argv[])
 	if(err < 0) {
 		goto CLEANUP;
 	}
+	printProcess(processes);
 
 	algrithm_t algo;
 	if(strncmp(argv[2], "fcfs", 4) == 0) {
+		printf("Using FCFS algorithm\n");
 		algo = FCFS;
 	} else if(strncmp(argv[2], "priority-preemptive", 20) == 0) {
+		printf("Using Priority Preemptive algorithm\n");
 		algo = PRIORITY_PREEMPTIVE;
 	} else if(strncmp(argv[2], "srtf", 4) == 0) {
+		printf("Using SRTF algorithm\n");
 		algo = SRTF;
 	} else if(strncmp(argv[2], "round-robin", 11) == 0) {
+		printf("Using Round Robin algorithm\n");
 		algo = ROUND_ROBIN;
 	} else {
+		printf("Algorithm not defined correctly.\n Available alglrithms: fcfs, priority-preemptive, srtf, round-robin\n");
+		goto CLEANUP;
+	}
+
+	int quantum = -1;
+	if(argc == 4 && algo == ROUND_ROBIN) {
+		quantum = atoi(argv[3]);
+		if(quantum <= 0) {
+			printf("Invalid quantum given. Will use default\n");
+			quantum = -1;
+		}
 	}
 
 	Metrics_arr *metrics = metrArr_new(pcbVec_length(processes));
@@ -73,7 +92,7 @@ int main(int argc, char *argv[])
 	int running_pid = 0, prev_running = 0;
 	int current_quantum = 0;
 
-	for(int time = 0; time < 20; time++) {
+	for(int time = 0; time < calculateMaxTime(processes); time++) {
 		printf("=== Simulation time: %d ===\n", time);
 		for(int i = 0; i < pcbVec_length(processes); i++) {
 			PCB *proc = pcbVec_get(processes, i);
@@ -96,7 +115,7 @@ int main(int argc, char *argv[])
 				srtf(&ready_q, &running_pid, processes);
 				break;
 			case ROUND_ROBIN:
-				rr(&ready_q, &running_pid, processes, &current_quantum);
+				rr(&ready_q, &running_pid, processes, &current_quantum, quantum);
 				break;
 		}
 
@@ -115,17 +134,22 @@ int main(int argc, char *argv[])
 			printf("\t\t| reamining: %d\n", running_proc->remaining);
 			printf("\tReady Queue: [ ");
 
-			foreach_node(ready_q, elem) {
-				printf("%d, ", elem->data);
+			foreach_nodeR(ready_q, elem) {
+				printf("%d", elem->data);
+				if(elem->prev != NULL) {
+					printf(", ");
+				}
 			}
-			printf("]\n");
+			printf(" ]\n");
 
 			printf("\tDone Queue: [ ");
-
-			foreach_node(done_q, elem) {
-				printf("%d, ", elem->data);
+			foreach_nodeR(done_q, elem) {
+				printf("%d", elem->data);
+				if(elem->prev != NULL) {
+					printf(", ");
+				}
 			}
-			printf("]\n\n");
+			printf(" ]\n\n");
 			//==============
 
 			// Check if process finished
@@ -142,10 +166,13 @@ int main(int argc, char *argv[])
 	}
 	printf("\nFinished:");
 	printf("\tFinal Done Queue: [ ");
-	foreach_node(done_q, elem) {
-		printf("%d, ", elem->data);
+	foreach_nodeR(done_q, elem) {
+		printf("%d", elem->data);
+		if(elem->prev != NULL) {
+			printf(", ");
+		}
 	}
-	printf("]\n");
+	printf(" ]\n\n");
 
 	q_destroy(&ready_q);
 	q_destroy(&done_q);
@@ -161,6 +188,24 @@ CLEANUP:
 	pcbVec_destroy(processes);
 
 	return 0;
+}
+
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+/* Calculates the maximum time the processes in vec could run so we know how much to run the simulation */
+int calculateMaxTime(PCB_vec *vec)
+{
+	int sum_burst = 0;
+	PCB *latest_proc = pcbVec_get(vec, 0);
+	for(int i = 0; i < pcbVec_length(vec); i++) {
+		PCB *tmp = pcbVec_get(vec, i);
+		sum_burst += tmp->burst;
+		if(tmp->arrival > latest_proc->arrival) {
+			latest_proc = tmp;
+		} else if(tmp->arrival == latest_proc->arrival && tmp->burst > latest_proc->burst) {
+			latest_proc = tmp;
+		}
+	}
+	return MAX(sum_burst, (latest_proc->arrival + latest_proc->burst));
 }
 
 void printProcess(PCB_vec *vec)

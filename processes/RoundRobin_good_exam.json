@@ -3,25 +3,29 @@
       "pid": 1,
       "arrival": 0,
       "burst": 5,
-      "remaining": 5
+      "remaining": 5,
+      "priority": 0
     },
     {
       "pid": 2,
       "arrival": 1,
       "burst": 4,
-      "remaining": 4
+      "remaining": 4,
+      "priority": 0
     },
     {
       "pid": 3,
       "arrival": 2,
       "burst": 3,
-      "remaining": 3
+      "remaining": 3,
+      "priority": 0
     },
     {
       "pid": 4,
       "arrival": 3,
       "burst": 6,
-      "remaining": 6
+      "remaining": 6,
+      "priority": 0
     }
   ]
   
